@@ -181,6 +181,7 @@ When you run the ML pipeline, it automatically:
 6. **Saves Results**: Stores all outputs to files:
    - Excel files with analysis, quality, and feature engineering results
    - PKL file with the trained model
+7. Create run_pipeline.py to test whether all features can run smoothly
 
 ### Step 3: Streamlit Dashboard
 After the ML pipeline completes, the Streamlit application:
