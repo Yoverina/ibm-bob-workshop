@@ -1,0 +1,20 @@
+{
+  "name": "bank-loan-app-frontend",
+  "version": "1.0.0",
+  "description": "Bank Loan Application - Frontend Only",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx http-server public -p 3000 -o",
+    "dev": "npx http-server public -p 3000 -o"
+  },
+  "keywords": [
+    "frontend",
+    "debugging",
+    "learning"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
