@@ -57,7 +57,7 @@ Module-5-Deployment-Platform/
 ├── 🔧 install-oc-cli.sh                  # macOS OpenShift CLI installer
 ├── 🔧 install-oc-cli-linux.sh            # Linux OpenShift CLI installer
 │
-├── 📂 bob/                                # Bob Orchestrator - Core deployment engine
+├── 📂 bob/                               # Bob Orchestrator - Core deployment engine
 │   ├── orchestrator.py                   # Main Flask API for deployments
 │   ├── jenkins.py                        # Jenkins pipeline integration
 │   └── k8s/                              # Bob's Kubernetes manifests
@@ -65,7 +65,7 @@ Module-5-Deployment-Platform/
 │       ├── service.yaml                  # Bob service definition
 │       └── route.yaml                    # Bob external route
 │
-├── 📂 web-ui/                             # Web UI - Visual deployment interface
+├── 📂 web-ui/                            # Web UI - Visual deployment interface
 │   ├── app.py                            # Flask backend with SocketIO
 │   ├── k8s/                              # Web UI Kubernetes manifests
 │   │   ├── deployment-simple.yaml        # Web UI deployment
@@ -81,26 +81,24 @@ Module-5-Deployment-Platform/
 │       ├── index.html                    # Main deployment page
 │       └── status.html                   # Deployment status page
 │
-├── 📂 k8s/                                # Infrastructure Kubernetes manifests
+├── 📂 k8s/                               # Infrastructure Kubernetes manifests
 │   ├── 00-namespaces.yaml                # Production & Development namespaces
 │   ├── 01-serviceaccount-rbac.yaml       # Service accounts & permissions
 │   └── 02-secret.yaml.example            # Secret template for tokens
 │
-├── 📂 sample-app/                         # Sample Flask application
+├── 📂 sample-app/                        # Sample Flask application
 │   ├── app.py                            # Simple Flask web app
 │   ├── Dockerfile                        # Container image definition
 │   ├── requirements.txt                  # Python dependencies
 │   └── README.md                         # Sample app documentation
 │
-└── 📂 docs/                               # Workshop documentation
-    ├── QUICKSTART.md                     # 15-minute quick start guide
+└── 📂 docs/                              # Workshop documentation
+    ├── QUICKSTART.md                     # Quick start guide
     ├── cheatsheet.md                     # Command reference
-    ├── troubleshooting.md                # Common issues & solutions
-    ├── WORKSHOP-CHECKLIST.md             # Step-by-step checklist
-    └── INSTRUCTOR-GUIDE.md               # Guide for instructors
+    └──  troubleshooting.md                # Common issues & solutions
 ```
 
-## 🔄 Deployment Flow
+## Deployment Flow
 
 ```mermaid
 sequenceDiagram
@@ -111,19 +109,19 @@ sequenceDiagram
     participant OS as OpenShift
     participant A as Application
 
-    D->>UI: 1. Upload app.py
+    D->>UI:  1. Upload app.py
     UI->>UI: 2. Generate manifests
-    UI->>B: 3. POST /deploy
-    B->>J: 4. Trigger pipeline
-    J->>OS: 5. Create deployment
-    J->>OS: 6. Create service
-    J->>OS: 7. Create route
-    OS->>A: 8. Start pods
-    A->>OS: 9. Health check
-    OS->>J: 10. Deployment status
-    J->>B: 11. Pipeline complete
-    B->>UI: 12. Success response
-    UI->>D: 13. Show deployment URL
+    UI->>B:  3. POST /deploy
+    B->>J:   4. Trigger pipeline
+    J->>OS:  5. Create deployment
+    J->>OS:  6. Create service
+    J->>OS:  7. Create route
+    OS->>A:  8. Start pods
+    A->>OS:  9. Health check
+    OS->>J:  10. Deployment status
+    J->>B:   11. Pipeline complete
+    B->>UI:  12. Success response
+    UI->>D:  13. Show deployment URL
 ```
 
 ## Documentation
@@ -327,7 +325,7 @@ curl -X POST <BOB_WEBHOOK_URL> \
 4. Click "Deploy Application"
 5. Monitor deployment progress
 
-## 🔧 Useful Commands
+## Useful Commands
 
 ### Check Deployment Status
 ```bash
