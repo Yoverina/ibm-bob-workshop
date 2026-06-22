@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bob-web-ui
+  namespace: production
+  labels:
+    app: bob-web-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bob-web-ui
+  template:
+    metadata:
+      labels:
+        app: bob-web-ui
+    spec:
+      serviceAccountName: jenkins-sa
+      containers:
+      - name: bob-web-ui
+        image: python:3.11-slim
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            mkdir -p /tmp/.local && \
+            export HOME=/tmp && \
+            export PATH=/tmp/.local/bin:$PATH && \
+            pip install --user --no-cache-dir Flask==3.0.0 flask-socketio==5.3.5 PyGithub==2.1.1 requests==2.31.0 PyYAML==6.0.1 python-dotenv==1.0.0 werkzeug==3.0.1 gunicorn==21.2.0 eventlet==0.33.3 && \
+            cd /app && \
+            /tmp/.local/bin/gunicorn --bind 0.0.0.0:8080 --workers 2 --timeout 120 app:app
+        volumeMounts:
+        - name: app-code
+          mountPath: /app/app.py
+          subPath: app.py
+        - name: templates
+          mountPath: /app/templates
+        - name: css
+          mountPath: /app/static/css
+        - name: js
+          mountPath: /app/static/js
+        - name: deployment-templates
+          mountPath: /app/deployment-templates
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: PORT
+          value: "8080"
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: bob-web-ui-secret
+              key: secret-key
+        - name: OPENSHIFT_API_URL
+          value: "https://kubernetes.default.svc"
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "1Gi"
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 5
+      volumes:
+      - name: app-code
+        configMap:
+          name: bob-web-ui-code
+      - name: templates
+        configMap:
+          name: bob-web-ui-templates
+      - name: css
+        configMap:
+          name: bob-web-ui-css
+      - name: js
+        configMap:
+          name: bob-web-ui-js
+      - name: deployment-templates
+        configMap:
+          name: bob-web-ui-deployment-templates
+
+# Made with Bob
