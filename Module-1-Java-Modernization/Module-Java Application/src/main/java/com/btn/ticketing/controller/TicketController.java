@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 /**
  * REST Controller for Ticket operations
- * Uses javax.validation (legacy - should be jakarta.validation in modern apps)
- * 
+ * Uses jakarta.validation (modern Jakarta EE)
+ *
  * WARNING: Missing security annotations and input validation
  */
 @RestController

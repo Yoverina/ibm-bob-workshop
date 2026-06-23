@@ -1,12 +1,12 @@
 package com.btn.ticketing.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 /**
  * User entity for system authentication
- * Uses javax.persistence (legacy - should be jakarta.persistence in modern apps)
+ * Uses jakarta.persistence (modern Jakarta EE)
  * Manual getters/setters (legacy style - modern apps would use Lombok or records)
  *
  * WARNING: This uses basic password storage - NOT SECURE for production!
