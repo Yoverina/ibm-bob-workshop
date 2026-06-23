@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - E-Commerce{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h2>Shopping Cart</h2>
+    
+    {% if cart_items %}
+    <div class="cart-items">
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <img src="{{ item.image_url }}" alt="{{ item.name }}">
+            <div class="cart-item-info">
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.description }}</p>
+                <p class="price">Rp {{ "{:,.0f}".format(item.price) }}</p>
+            </div>
+            <div class="cart-item-actions">
+                <form method="POST" action="{{ url_for('update_cart', cart_id=item.cart_id) }}" class="quantity-form">
+                    <label for="quantity-{{ item.cart_id }}">Quantity:</label>
+                    <input type="number" id="quantity-{{ item.cart_id }}" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.stock }}">
+                    <button type="submit" class="btn btn-sm">Update</button>
+                </form>
+                <form method="POST" action="{{ url_for('remove_from_cart', cart_id=item.cart_id) }}">
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                </form>
+            </div>
+            <div class="cart-item-total">
+                <strong>Rp {{ "{:,.0f}".format(item.price * item.quantity) }}</strong>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="summary-row">
+            <span>Total Items:</span>
+            <span>{{ cart_items|length }}</span>
+        </div>
+        <div class="summary-row total">
+            <span>Total Price:</span>
+            <span>Rp {{ "{:,.0f}".format(total) }}</span>
+        </div>
+        <form method="POST" action="{{ url_for('checkout') }}">
+            <button type="submit" class="btn btn-primary btn-block">Checkout</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <p>Your cart is empty</p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Continue Shopping</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
